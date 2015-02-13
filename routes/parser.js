@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var request = require("request");
 var cheerio = require('cheerio');
-var util    = require('util');
 var JSON    = require('JSON');
 
 
@@ -10,8 +9,7 @@ var JSON    = require('JSON');
 router.get('/', function (req, res, next) {
 
 	var sym = req.query.sym;
-	console.log("sym:"+sym);
-
+	
 	//Tell the request that we want to fetch data, send the results to a callback function
 	request({
 		uri : 'http://www.reuters.com/finance/stocks/companyOfficers?symbol='+sym
@@ -27,7 +25,6 @@ router.get('/', function (req, res, next) {
 		var dataset = $("#companyNews * .dataTable .dataSmall")
 		var datasetJSON = [];
 		
-		console.log("Data Set Length "+dataset.length);
 		res.setHeader("Content-Type", "application/json; charset=UTF-8 ");
 		
 		for ( var i = 0; i < dataset.length; i++) {
@@ -35,9 +32,6 @@ router.get('/', function (req, res, next) {
 			//The following values must co-relate. It should. 
 			var headerArray  = $(dataset[i]).find("tr th").map(function (i, o ) { return $(o).text(); });
 			var dataArray    = $(dataset[i]).find("tr td").map(function (i, o ) { return $(o).text(); });
-			
-			console.log("Number Headers :"+headerArray.length);
-			console.log("Number datafields :"+dataArray.length);
 			
 			var category = [];
 			var offset = 0;
