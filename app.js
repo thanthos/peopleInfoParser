@@ -5,8 +5,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var request = require("request");
+var fs = require('fs'); 
 
 var parser = require('./routes/parser');
+var search = require('./routes/search');
 
 var app = express();
 app.set('env','prod');
@@ -17,11 +19,19 @@ app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 app.use(favicon(__dirname + '/public/favicon.ico'));
-app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use('/parser', parser);
+app.use(express.static(path.join(__dirname, 'public')));
+
+//setup access.logs
+var accessLogStream = fs.createWriteStream(__dirname+'/logs/access.log',{flag:'a'});
+app.use(logger('combined',{stream:accessLogStream}));
+
+//Route to Application Proper
+app.use('/pparser', parser); //People Paraser (P)(Parser)
+app.use('/ssearch',search); //Stock Search (S)(Search)
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
