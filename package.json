@@ -15,6 +15,10 @@
     "serve-favicon": "~2.2.0",
 	"request":"*",
 	"cheerio":"*",
-	"JSON":"*"
+	"JSON":"*",
+	"hashmap":"2.0.1",
+	"passport":"0.2.1",
+	"passport-local":"*",
+	"express-session":"*"
   }
 }
