@@ -6,14 +6,34 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var request = require("request");
 var fs = require('fs'); 
+var passport = require('passport');
+var expressSession = require('express-session');
+var flash = require('connect-flash');
 
+var dbConfig = require('./db');
+var mongoose = require('mongoose');
 
-var parser = require('./routes/parser');
-var search = require('./routes/search');
-var login  = require('./login');
+// Connect to DB
+mongoose.connect(dbConfig.url);
 
 var app = express();
-app.set('env','prod');
+//configure passport
+app.use(expressSession({secret: 'mySecretKey'}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+ // Using the flash middleware provided by connect-flash to store messages in session
+ // and displaying in templates
+app.use(flash());
+
+
+var routes = require('./routes/index');
+var login  = require('./login');
+var parser = require('./routes/parser');
+var search = require('./routes/search');
+
+
+//app.set('env','prod');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -25,18 +45,18 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.session({ secret: 'keyboard cat' }));
-app.use(passport.initialize());
-app.use(passport.session());
 
 //setup access.logs
 var accessLogStream = fs.createWriteStream(__dirname+'/logs/access.log',{flag:'a'});
 app.use(logger('combined',{stream:accessLogStream}));
 
 //Route to Application Proper
+app.use('/login', login);  
 app.use('/pparser', parser); //People Paraser (P)(Parser)
+//Routes after the below root will be check for authentication.
+app.use('/', routes);  //routes above this are public
 app.use('/ssearch', search); //Stock Search (S)(Search)
-app.use('/login', login);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

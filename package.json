@@ -1,24 +1,30 @@
 {
-  "name": "parser",
-  "version": "1.0.1",
-  "private": true,
-  "scripts": {
-    "start": "node ./bin/www"
-  },
-  "dependencies": {
-    "body-parser": "~1.10.2",
-    "cookie-parser": "~1.3.3",
-    "debug": "~2.1.1",
-    "express": "~4.11.1",
-    "jade": "~1.9.1",
-    "morgan": "~1.5.1",
-    "serve-favicon": "~2.2.0",
-	"request":"*",
-	"cheerio":"*",
-	"JSON":"*",
-	"hashmap":"2.0.1",
-	"passport":"0.2.1",
-	"passport-local":"*",
-	"express-session":"*"
-  }
+	"name" : "parser",
+	"version" : "1.0.1",
+	"description" : "",
+	"author" : "James Tang <jamez.tang@zeusview.com>",
+	"contributors" : [],
+	"preferGlobal" : false,
+	"private" : true,
+	"scripts" : {
+		"start" : "node ./bin/www"
+	},
+	"keywords" : [],
+	"dependencies" : {
+		"body-parser" : "~1.10.2",
+		"cookie-parser" : "~1.3.3",
+		"debug" : "~2.1.1",
+		"express" : "~4.11.1",
+		"jade" : "~1.9.1",
+		"morgan" : "~1.5.1",
+		"serve-favicon" : "~2.2.0",
+		"request" : "*",
+		"cheerio" : "*",
+		"JSON" : "*",
+		"hashmap" : "2.0.1",
+		"passport" : "0.2.1",
+		"passport-local" : "*",
+		"express-session" : "*",
+		"mongoose" : "*"
+	}
 }

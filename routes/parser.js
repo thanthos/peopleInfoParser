@@ -11,7 +11,7 @@ router.get('/', function (req, res, next) {
 
 	//Tell the request that we want to fetch data, send the results to a callback function
 	request({
-		uri : 'http://www.reuters.com/finance/stocks/companyOfficers?symbol=' + sym
+		uri : 'http://www.reuters.com/finance/stocks/companyOfficers?symbol='+sym
 	}, function (err, response, body) {
 		// Hand the HTML response off to Cheerio and assign that to
 		//  a local $ variable to provide familiar jQuery syntax.

@@ -1,24 +1,29 @@
-extends layout
+doctype html
+html
+	head
+		title= title
+		link(rel='stylesheet', href='/stylesheets/loginLayout.css')
+	body
+		div(id="header")
+		div(id = "content")
+			div(class="center")
+				form(method = "post" action= action id="searchStockForm")
+					table(class = "transparentTable")
+						tr
+							td 
+								|Username:
+							td  
+								input(type = "text", col = "50" name = "username" placeholder = "username")
+						tr
+							td
+								|Password:
+							td
+								input(type = "password", col = "50" name = "password" placeholder = "password")
+						tr
+							td(colspan=2 align="center")
+								input(type = "submit")
 
-block content
-	div(class = "inlineDialog")
-		form(method = "post" action= action id="searchStockForm")
-			table(class = "transparentTable")
-				tr
-					td 
-						|Username:
-					td  
-						input(type = "text", col = "50" name = "username" placeholder = "username")
-				tr
-					td
-						|Password:
-					td
-						input(type = "password", col = "50" name = "password" placeholder = "password")
-				tr
-					td(colspan=2 align="center")
-						input(type = "submit")
-
-	div 
-		p
-			message
-	
+		div 
+			p
+				message
+		
