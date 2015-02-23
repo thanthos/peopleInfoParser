@@ -1,0 +1,61 @@
+{
+	id :  < ID > ,
+	displayName : 'James Tang',
+	name : {
+		familyName : 'Tang',
+		givenName : 'James'
+	},
+	emails : [{
+			value : 'jamez.tang@gmail.com'
+		}
+	],
+	updated :  < Date - User Non Editable >
+	username :  < username >
+	password :  < password >
+	provider : [{
+			name : 'google',
+			id : '112723240810698687216',
+			link : 'https://plus.google.com/112723240810698687216',
+			picture : 'https://lh3.googleusercontent.com/-ESHbLPRJ5Rk/AAAAAAAAAAI/AAAAAAAAEag/BYVGMavEZ6k/photo.jpg',
+			gender : 'male',
+			locale : 'en'
+		}, {
+			name : 'facebook'
+		}, {
+			name : 'twitter'
+		}, {
+			name : 'linkedin'
+		}
+	]
+}
+
+Originals {
+	provider : 'google',
+	id : '112723240810698687216',
+	displayName : 'James Tang',
+	name : {
+		familyName : 'Tang',
+		givenName : 'James'
+	},
+	emails : [{
+			value : 'jamez.tang@gmail.com'
+		}
+	],
+	_raw : '{\n "id": "112723240810698687216",\n "email": "jamez.tang@gmail.com",\n "verified_email": t
+			rue,\n "name": "James Tang",\n "given_name": "James",\n "family_name": "Tang",\n "link": "https://pl
+			us.google.com/112723240810698687216",\n "picture": "https://lh3.googleusercontent.com/-ESHbLPRJ5Rk/A
+			AAAAAAAAAI/AAAAAAAAEag/BYVGMavEZ6k/photo.jpg",\n "gender": "male",\n "locale": "en"\n}\n',
+	_json : {
+		id : '112723240810698687216',
+		email : 'jamez.tang@gmail.com',
+		verified_email : true,
+		name : 'James Tang',
+		given_name : 'James',
+		family_name : 'Tang',
+		link : 'https://plus.google.com/112723240810698687216',
+		picture : 'https://lh3.googleusercontent.com/-ESHbLPRJ5Rk/AAAAAAAAAAI/AAAAAAAAEag/BYVGMavEZ6k/ph
+						oto.jpg',
+		gender : 'male',
+		locale : 'en'
+	}
+}
