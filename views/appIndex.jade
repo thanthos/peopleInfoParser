@@ -1,0 +1,15 @@
+doctype html
+html
+	head
+		title= title
+		link(rel='stylesheet', href='/stylesheets/loginLayout.css')
+		//script(src="https://apis.google.com/js/client:platform.js" async defer)
+	body
+		H1=title
+		ul
+			each app in apps
+				li 
+					a(href=app.Link) 
+						=app.name	
+						
+			
