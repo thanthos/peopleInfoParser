@@ -25,6 +25,8 @@
 		"passport" : "0.2.1",
 		"passport-local" : "*",
 		"express-session" : "*",
-		"mongoose" : "*"
+		"mongoose" : "*",
+		"bcrypt-nodejs":"*",
+		"passport-google-oauth":"*"
 	}
 }

@@ -3,6 +3,7 @@ html
 	head
 		title= title
 		link(rel='stylesheet', href='/stylesheets/loginLayout.css')
+		script(src="https://apis.google.com/js/client:platform.js" async defer)
 	body
 		div(id="header")
 		div(id = "content")
@@ -22,7 +23,8 @@ html
 						tr
 							td(colspan=2 align="center")
 								input(type = "submit")
-
+			div(class="center")
+				<a href="/login/google">Sign In with Google</a>
 		div 
 			p
 				message

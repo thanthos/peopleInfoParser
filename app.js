@@ -4,7 +4,6 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var request = require("request");
 var fs = require('fs'); 
 var passport = require('passport');
 var expressSession = require('express-session');
@@ -29,8 +28,7 @@ app.use(flash());
 
 var routes = require('./routes/index');
 var login  = require('./login');
-var parser = require('./routes/parser');
-var search = require('./routes/search');
+var userApps = require('./apps/index');
 
 
 //app.set('env','prod');
@@ -52,16 +50,14 @@ app.use(logger('combined',{stream:accessLogStream}));
 
 //Route to Application Proper
 app.use('/login', login);  
-app.use('/pparser', parser); //People Paraser (P)(Parser)
 //Routes after the below root will be check for authentication.
-app.use('/', routes);  //routes above this are public
-app.use('/ssearch', search); //Stock Search (S)(Search)
+app.use('/', routes);  //routes above this are public. These action perform checks to ensure there is an authenticated users
+app.use('/apps', userApps); //Applications
 
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-	console.log(req);
-    var err = new Error('Not Found');
+	var err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
