@@ -1,0 +1,31 @@
+doctype html
+html
+	head
+		title=title
+		meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1")
+		link(rel='stylesheet', href='/stylesheets/style.css')
+		link(rel='stylesheet', href='/stylesheets/drawer.css')
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js")
+	body
+		input(type="checkbox" id="drawer-toggle" name="drawer-toggle")
+		label(for="drawer-toggle" id="drawer-toggle-label")
+		header
+			span(class="leftHalf")
+				|Zeus View
+			span(class="rightHalf username_Display") 
+				|Welcome 
+				a(href="#")
+					|user
+		nav( id="drawer")
+			div(class="list_Header") 
+				div
+					|Application List
+				br
+				div
+					ul
+						each app in apps
+							li
+								a( href=app.href)
+									=app.name
+		div(id="page-content")
+			block content

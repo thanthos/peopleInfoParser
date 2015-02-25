@@ -80,7 +80,7 @@ passport.use('login', new LocalStrategy({
 passport.use(new GoogleStrategy({
 		clientID : '854924225793-kse5do7ud0qle7hkhs6ndbm6mrg79hu3.apps.googleusercontent.com',
 		clientSecret : 'E00vUB9aFVlAlSrcGuPWmroR',
-		callbackURL : "http://localhost:3000/login/google/callback"
+		callbackURL : "http://www.connect-nodes.com:3000/login/google/callback"
 	},
 		function (accessToken, refreshToken, profile, done) {
 		// asynchronous verification, for effect...

@@ -3,12 +3,13 @@ var router = express.Router();
 
 var search = require('./search');
 var parser = require('./parser');
-
+var appsListing = require('./apps.json');
+console.log(appsListing);
 router.use('/ssearch', search);
 router.use('/pparser', parser);
 
 router.get('/', function(req,res) {
-	res.render('appIndex',{title:'Application Index',apps:[{"name":"Stock Search","Link":"/apps/ssearch"},{"name":"People Search","Link":"/apps/pparser"}]});
+	res.render('appIntro',{title:'Application Index', "apps":appsListing});
 	});
-
+ 
 module.exports = router;

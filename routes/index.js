@@ -5,6 +5,7 @@ var router = express.Router();
 router.get('/*', function (req, res, next) {
 	if (req.isAuthenticated()) {
 		console.log("isAuthenticated = True");
+		console.log(req.user);
 		return next();
 	} else {
 		// if the user is not authenticated then redirect him to the login page

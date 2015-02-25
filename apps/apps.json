@@ -1,0 +1,8 @@
+[{
+		"name" : "Stock Search",
+		"href" : "/apps/ssearch"
+	}, {
+		"name" : "People Search",
+		"href" : "/apps/pparser"
+	}
+]
