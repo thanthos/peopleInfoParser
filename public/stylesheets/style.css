@@ -22,3 +22,20 @@ div.list_Header{
 	font-size:18px;
 	padding: 5px;
 }
+
+div.footer{
+	font-size:10px;
+	display: -webkit-flex;
+	display: flex;
+	width=100%;
+}
+
+div.footerContent{
+-webkit-flex: 1; /* Safari 6.1+ */
+    -ms-flex: 1; /* IE 10 */ 
+    flex: 1;
+	text-align:center;
+}
+div.headingText{
+	font:24px bold;
+}

@@ -1,19 +1,16 @@
-doctype html
-html
-	head
-		title= title
-		link(rel='stylesheet', href='/stylesheets/loginLayout.css')
-		script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js")
-		
-		
-	body
-		div(id="fb-root")
-		script(src="/javascripts/fblogin.js")
-		div(id="header")
-		div(id = "content")
-			div(class="center")
-				form(method = "post" action= action id="searchStockForm")
-					table(class = "transparentTable")
+extends defaultLayout
+
+append styles
+	link(rel='stylesheet', href='/stylesheets/centerFocusLayout.css')
+
+block bodyContent
+	div#wrapper
+		div#content
+			div.center
+				div.headingText
+					|ZeusView : Seeing Everything
+				form(method="post" action="/login" id="loginForm")
+					table(class="translucent" align="center")
 						tr
 							td 
 								|Username:
@@ -29,7 +26,7 @@ html
 								input(type = "submit")
 			div(class="center")
 				button(id="customBtn" onclick='window.location.href="/login/google"') Sign in with Google
-				div(class="fb-login-button" data-max-rows="1" data-size="medium" data-show-faces="false" data-auto-logout-link="false")
-		div
-			p
-				message
+block footer
+	div.footer 
+		div.footerContent
+			|Copyright 2015 ©ZeusView
