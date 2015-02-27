@@ -1,3 +1,9 @@
+/*
+Handles all the global functions which currently include:
+1) Login
+2) Logout
+*/
+
 var express = require('express');
 var router = express.Router();
 

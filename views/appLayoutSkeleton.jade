@@ -14,8 +14,9 @@ html
 				|Zeus View
 			span(class="rightHalf username_Display") 
 				|Welcome 
-				a(href="#")
-					|user
+				a(href="#")=user.displayName
+				||
+				a(href="/signout") LogOut
 		nav( id="drawer")
 			div(class="list_Header") 
 				div

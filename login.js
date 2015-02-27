@@ -5,6 +5,8 @@ var LocalStrategy = require('passport-local').Strategy;
 var bCrypt = require('bcrypt-nodejs');
 var User = require('./models/user.js');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var callBackHost = require('./callbackConfig.json').host;
+var util = require('./libs/utils');
 
 var isValidPassword = function (user, password) {
 	return bCrypt.compareSync(password, user.password);
@@ -25,22 +27,21 @@ var isValidPassword = function (user, password) {
 //   the user by ID when deserializing.  However, since this example does not
 //   have a database of user records, the complete Google profile is
 //   serialized and deserialized.
-passport.serializeUser(function(user, done) {
-  console.log('serializing user: ');
-  //console.log(user);
-  done(null, user);
+passport.serializeUser(function (user, done) {
+	console.log('serializing user: ');
+	//console.log(user);
+	done(null, user);
 });
 
-passport.deserializeUser(function(obj, done) {
-  //ToDo: Identified the loging mechanism and deserialize the user accordingly.
- 
-//This is use by Local User login.
-//  User.findById(id, function (err, user) {
-//	console.log('deserializing user:', user);
-//  done(err, user);
-//  });
+passport.deserializeUser(function (obj, done) {
+	//ToDo: Identified the loging mechanism and deserialize the user accordingly.
 
-  done(null, obj);
+	//This is use by Local User login.
+	//  User.findById(id, function (err, user) {
+	//	console.log('deserializing user:', user);
+	//  done(err, user);
+	//  });
+	done(null, obj);
 });
 
 passport.use('login', new LocalStrategy({
@@ -52,7 +53,7 @@ passport.use('login', new LocalStrategy({
 		User.findOne({
 			'username' : username
 		},
-			function (err, user) {
+			function (err, user) { //user here is the return result.
 			// In case of any error, return using the done method
 			if (err)
 				return done(err);
@@ -70,28 +71,76 @@ passport.use('login', new LocalStrategy({
 			// which will be treated like success
 			return done(null, user);
 		});
-
 	}));
 
-// Use the GoogleStrategy within Passport.
+//   Use the GoogleStrategy within Passport.
 //   Strategies in Passport require a `verify` function, which accept
 //   credentials (in this case, an accessToken, refreshToken, and Google
 //   profile), and invoke a callback with a user object.
 passport.use(new GoogleStrategy({
 		clientID : '854924225793-kse5do7ud0qle7hkhs6ndbm6mrg79hu3.apps.googleusercontent.com',
 		clientSecret : 'E00vUB9aFVlAlSrcGuPWmroR',
-		callbackURL : "http://www.connect-nodes.com:3000/login/google/callback"
+		callbackURL : "http://" + callBackHost + ":3000/login/google/callback"
 	},
 		function (accessToken, refreshToken, profile, done) {
-		// asynchronous verification, for effect...
 		process.nextTick(function () {
 
 			// To keep the example simple, the user's Google profile is returned to
 			// represent the logged-in user.  In a typical application, you would want
 			// to associate the Google account with a user record in your database,
 			// and return that user instead.
-			return done(null, profile);
-		});
+			//ToDo to refine the flow
+			console.log("GoogleProfile Returned:"+profile.id+"::"+profile.provider+"::"+profile.displayName);
+			
+			
+			User.findOne({
+				'provider.id' : profile.id,
+				'provider.name' : profile.provider
+			},
+				function (err, user) {
+				// In case of any error, return using the done method
+				if (err) {
+					return done(err);
+				}
+				// Username does not exist, log the error and redirect back
+				if (!user) {
+					console.log('User Not Found. Insert Into Our User Profile');
+					var newUser = new User();
+
+					// set the user's local credentials
+					newUser.z_id = util.genID(profile.id)
+					newUser.displayName = profile.displayName;
+					newUser.name.familyName = profile.name.familyName;
+					newUser.name.givenName = profile.name.givenName;
+					newUser.emails = profile.emails;
+					newUser.email = profile.emails[0].value;
+					newUser.updated = new Date();
+					newUser.provider = [{
+							"name" : profile.provider,
+							"id" : profile.id,
+							"link" : profile._json.link,
+							"picture" : profile._json.picture,
+							"gender" : profile._json.gender,
+							"locale" : profile._json.locale
+						}
+					];
+					// save the user
+					newUser.save(function (err) {
+						if (err) {
+							console.log('Error in Saving user: ' + err);
+							throw err;
+						}
+						console.log('User Registration succesful');
+					});
+					
+					return done(null,{"id":newUser.z_id,"displayName":newUser.displayName});
+				}
+				console.log("Found"+user.displayName);
+				return done(null, {"id":user.z_id,"displayName":user.displayName});
+
+			});
+
+		})
 	}));
 
 /*
