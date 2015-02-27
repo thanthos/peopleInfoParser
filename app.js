@@ -48,7 +48,7 @@ app.use(logger('combined',{stream:accessLogStream}));
 
 //Route to Application Proper
 app.get('/testJade', function (req, res) { //Using this route to test my Jade Templates.
-	res.render('testJade',{"title":"Template Testing"});
+	res.render('testJade',{"title":"Template Testing","apps":require('./apps/apps.json'),"user":{"displayName":"test"}});
 });
 
 app.use('/login', login);  

@@ -79,7 +79,7 @@ header {
 	background: #6291BE;
 	overflow-x: hidden;
 	overflow-y: scroll;
-	padding: 20px;
+	padding: 10px 20px 5px 20px;
 	line-height: 10px;
 	-webkit-overflow-scrolling: touch;
 }

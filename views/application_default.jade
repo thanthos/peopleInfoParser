@@ -1,0 +1,38 @@
+extends defaultLayout
+
+block meta
+	meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1")
+
+append styles
+	link(rel='stylesheet', href='/stylesheets/drawer.css')
+
+block bodyContent
+	input(type="checkbox" id="drawer-toggle" name="drawer-toggle")
+	label(for="drawer-toggle" id="drawer-toggle-label")
+	header
+		span(class="leftHalf")
+			|Zeus View
+		span(class="rightHalf username_Display") 
+			|Welcome 
+			a(href="#")=user.displayName
+			||
+			a(href="/signout") LogOut
+	nav( id="drawer")
+		div(class="list_Header")
+			|Application List
+		ul
+			each app in apps
+				li
+					a(href=app.href)=app.name
+	div(id="page-content")
+		block pageContent
+			p
+				|ZeusView is a an application that help you keep track of things which are of interested to you. The below are some of the features of ZeusView:
+				ul(style="list-style-type: circle;")
+				li Nodes/Asset Browser
+				li Relationship Browser
+				li Relationship Travsals
+				li State Change Notification
+			br
+			p
+			|We are still developing various data model to provide that off the shelf usage. Keep a watch out of this space. 
