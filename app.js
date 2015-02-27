@@ -13,7 +13,7 @@ var dbConfig = require('./db');
 var mongoose = require('mongoose');
 
 // Connect to DB
-mongoose.connect(dbConfig.url);
+mongoose.connect(dbConfig.url, dbConfig.options);
 
 var app = express();
 //configure passport
@@ -29,7 +29,7 @@ var routes = require('./routes/index');
 var login  = require('./login');
 var userApps = require('./apps/index');
 
-//app.set('env','prod');
+app.set('env','prod');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -47,10 +47,11 @@ var accessLogStream = fs.createWriteStream(__dirname+'/logs/access.log',{flag:'a
 app.use(logger('combined',{stream:accessLogStream}));
 
 //Route to Application Proper
+/*
 app.get('/testJade', function (req, res) { //Using this route to test my Jade Templates.
 	res.render('testJade',{"title":"Template Testing","apps":require('./apps/apps.json'),"user":{"displayName":"test"}});
 });
-
+*/
 app.use('/login', login);  
 //Routes after the below root will be check for authentication.
 app.use('/', routes);  //routes above this are public. These action perform checks to ensure there is an authenticated users

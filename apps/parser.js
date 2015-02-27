@@ -6,9 +6,21 @@ var JSON = require('JSON');
 var HashMap = require('hashmap').HashMap;
 
 router.get('/', function (req, res, next) {
-
-	var sym = req.query.sym;
-
+	var formDetails={
+		"method":"POST",
+		"action":"/apps/pparser",
+		"id":"searchStockForm"
+	}
+	res.render('parser_form', {
+		f:formDetails
+	});	
+	
+	
+	});
+	
+	
+router.post('/', function (req, res, next) {
+	var sym = encodeURIComponent(req.body.sym);
 	//Tell the request that we want to fetch data, send the results to a callback function
 	request({
 		uri : 'http://www.reuters.com/finance/stocks/companyOfficers?symbol='+sym
@@ -61,5 +73,6 @@ router.get('/', function (req, res, next) {
 			}
 			res.end(JSON.stringify(map.values()));
 		});
-	});
+
+});
 	module.exports = router;

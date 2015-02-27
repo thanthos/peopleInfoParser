@@ -23,7 +23,11 @@ block bodyContent
 		ul
 			each app in apps
 				li
-					a(href=app.href)=app.name
+					a(href="#" class="appLink" name=app.href)=app.name
+		script.
+			$('a.appLink').click(function(eventObject){
+				$('#page-content').replaceWith($('#page-content').load(this.name));
+			});
 	div(id="page-content")
 		block pageContent
 			p

@@ -1,0 +1,11 @@
+extends fragments_form_layout
+
+block formContent
+	div
+		label
+			|Searching For 
+			input(type="text", col="50" name="searchStockSymbol" placeholder="Stock symbol or name")
+	div
+		input(type="submit")
+	p.
+		List the listed company that may be related to your search.

@@ -5,16 +5,20 @@ var cheerio = require('cheerio');
 var JSON = require('JSON');
 
 router.get('/', function (req, res, next) {
-	res.render('search', {
-		title : 'Company Search',
-		action : '/apps/ssearch'
-	});
+	var formDetails={
+		"method":"POST",
+		"action":"/apps/ssearch",
+		"id":"searchStockForm"
+	}
+	res.render('search_form', {
+		f:formDetails
+	});	
 });
 
 router.post('/', function (req, res, next) {
 	var searchContext = encodeURIComponent(req.body.searchStockSymbol);
 	
-	console.log("This is the search strings "+searchContext);
+	console.log("search.js?query="+searchContext);
 	
 	//http://www.reuters.com/finance/stocks/lookup?searchType=any&search=cordlife%20limited
 	request({

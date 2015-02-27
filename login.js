@@ -147,7 +147,7 @@ passport.use(new GoogleStrategy({
  * Handle the login page rendering
  */
 router.get('/', function (req, res, next) {
-	res.render('login', {
+	res.render('default_login', {
 		title : 'Login',
 		action : '/login'
 	});
@@ -157,8 +157,8 @@ router.get('/', function (req, res, next) {
 /* Handle Login POST
  */
 router.post('/', passport.authenticate('login', {
-		successRedirect : '/home.html',
-		failureRedirect : '/',
+		successRedirect : '/apps',
+		failureRedirect : '/login',
 		failureFlash : true
 	}));
 
