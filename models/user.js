@@ -27,6 +27,41 @@ module.exports = mongoose.model('User', {
 	});
 
 /*
+The envisage model.
+This is to cater the upate 
+{
+	id :  < ID > ,
+	displayName : 'James Tang',
+	name : {
+		familyName : 'Tang',
+		givenName : 'James'
+	},
+	emails : [{
+			value : 'jamez.tang@gmail.com'
+		}
+	],
+	updated :  < Date - User Non Editable >
+	username :  < username >
+	password :  < password >
+	provider : [{
+			name : 'google',
+			id : '112723240810698687216',
+			link : 'https://plus.google.com/112723240810698687216',
+			picture : 'https://lh3.googleusercontent.com/-ESHbLPRJ5Rk/AAAAAAAAAAI/AAAAAAAAEag/BYVGMavEZ6k/photo.jpg',
+			gender : 'male',
+			locale : 'en'
+			lastsync: <date> non editable
+		}, {
+			name : 'facebook'
+		}, {
+			name : 'twitter'
+		}, {
+			name : 'linkedin'
+		}
+	]
+}
+
+
 { provider: 'google',
 id: '112723240810698687216',
 displayName: 'James Tang',
