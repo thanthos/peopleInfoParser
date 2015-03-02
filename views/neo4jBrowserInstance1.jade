@@ -1,0 +1,26 @@
+extends fragments_neo4jBrowser
+
+block fragmentContent
+	div#sigmaCanvas
+		
+	script.
+		//Set Sigma Default Renderer to Canvas
+		sigma.renderers.def = sigma.renderers.canvas
+		// Instantiate sigma:
+		var s = new sigma({
+			renderer: { container: document.getElementById('sigmaCanvas'),type: 'canvas'},
+			settings: {
+				doubleClickEnabled: false,
+				minEdgeSize: 0.5,
+				minArrowSize: 1.5,
+				enableEdgeHovering: true,
+				edgeHoverSizeRatio: 1.5,
+			}
+		});
+
+	script.
+		var g = {id:0,"name":"ME", "label":"ME", x:0, y:0 , size:3};
+		s.graph.addNode(g);
+		s.refresh();
+	
+	div#toolbox

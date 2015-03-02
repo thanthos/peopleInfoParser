@@ -4,5 +4,9 @@
 	}, {
 		"name" : "People Search",
 		"href" : "/apps/pparser"
+	},
+	{
+		"name" : "Static Relationship Browser (Stocks)",
+		"href" : "/apps/staticBrowser1"
 	}
 ]

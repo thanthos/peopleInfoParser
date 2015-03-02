@@ -1,8 +1,7 @@
 //- A page fragments. Not a complete page. 
 
 if block == undefined
-	div
-		block fragmentContent
+	block fragmentContent
 else
 	div(id = block.id class=block.class)
 		block fragmentContent
