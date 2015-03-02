@@ -17,7 +17,10 @@ mongoose.connect(dbConfig.url, dbConfig.options);
 
 var app = express();
 //configure passport
-app.use(expressSession({secret: 'mySecretKey'}));
+app.use(expressSession({'secret': 'to live is to learn. what have you learnt today?',
+						'name':'zview.sid',
+						'cookie':{'maxAge':3600000}
+						}));
 app.use(passport.initialize());
 app.use(passport.session());
 
