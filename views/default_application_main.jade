@@ -5,7 +5,11 @@ block meta
 
 append styles
 	link(rel='stylesheet', href='/stylesheets/drawer.css')
-
+	
+append scripts
+	include ./includes/sigma.jade
+	include ./includes/sigma_extentions.jade
+	
 block bodyContent
 	input(type="checkbox" id="drawer-toggle" name="drawer-toggle")
 	label(for="drawer-toggle" id="drawer-toggle-label")
@@ -32,7 +36,7 @@ block bodyContent
 		block pageContent
 			p
 				|ZeusView is a an application that help you keep track of things which are of interested to you. The below are some of the features of ZeusView:
-				ul(style="list-style-type: circle;")
+			ul(style="list-style-type: circle;")
 				li Nodes/Asset Browser
 				li Relationship Browser
 				li Relationship Travsals

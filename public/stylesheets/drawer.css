@@ -120,13 +120,17 @@ header {
 /* Menu item styles */
 #drawer ul {
     list-style-type:none;
-	line-height:10%
+	line-height:10%;
+	font-stretch: normal;
+	
 }
 #drawer ul a {
     display:block;
-    padding:10px;
+    padding:3px;
     color:#c7c7c7;
     text-decoration:none;
+	line-height:1em;
+	
 }
 
 #drawer ul a:hover {
