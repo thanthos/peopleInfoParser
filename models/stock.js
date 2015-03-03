@@ -7,7 +7,7 @@ module.exports = mongoose.model('Stock', {
 		searchInitiateBy: String,
 		foundOn: Date,
 		updatedOn: Date
-}
+});
 
 /*
 The envisage model to capture the following information.

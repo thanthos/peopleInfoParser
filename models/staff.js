@@ -1,22 +1,23 @@
 var mongoose = require('mongoose');
 
 module.exports = mongoose.model('staff', {
-		symbol : String,
 		name : String,
-		age: Number,
-		since: Number,
-		position: String,
+		age : Number,
+		symbol : String,
+		since : Number,
+		position : String,
 		description : String,
-		lastFiscalCompensation: Number,
-		optionsHolding: Number,
-		optionsValue:Number,
-		searchInitiateBy: String,
-		foundOn: Date,
-		updatedOn: Date
-}
+		lastFiscalCompensation : Number,
+		optionsHolding : Number,
+		optionsValue : Number,
+		searchInitiateBy : String,
+		foundOn : Date,
+		updatedOn : Date
+	});
 
 /*
 The envisage model to capture the following information.
+
 {
 "Name": "Choon Hou Ho",
 "Age": "43",
