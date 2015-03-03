@@ -25,5 +25,13 @@ block fragmentContent
 	
 	div#toolbox
 		div#toolset1
+			
 		div#toolset2
+			button#reloadButton Reload
+				script.
+					$("button#reloadButton").click(function(eventObject){
+						$.get("/apps/staticBrowser1/staticModel.json", function(data){s.graph.clear(); s.graph.read(data);s.refresh();},"json");
+					});
+			
 		
+			

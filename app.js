@@ -9,6 +9,8 @@ var passport = require('passport');
 var expressSession = require('express-session');
 var flash = require('connect-flash');
 
+
+
 var dbConfig = require('./db');
 var mongoose = require('mongoose');
 
@@ -16,6 +18,8 @@ var mongoose = require('mongoose');
 mongoose.connect(dbConfig.url, dbConfig.options);
 
 var app = express();
+// uncomment after placing your favicon in /public
+app.use(favicon(__dirname + '/public/favicon.ico'));
 //configure passport
 app.use(expressSession({'secret': 'to live is to learn. what have you learnt today?',
 						'name':'zview.sid',
