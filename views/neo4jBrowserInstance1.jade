@@ -15,8 +15,13 @@ block fragmentContent
 				minArrowSize: 1.5,
 				enableEdgeHovering: true,
 				edgeHoverSizeRatio: 1.5,
+				defaultLabelSize:10,
+				edgeColor:"Source",
+				labelSize:"proportional"
+				
 			}
 		});
+		var dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
 
 	script.
 		var g = {id:0,"name":"ME", "label":"ME", x:0, y:0 , size:3};
@@ -25,13 +30,42 @@ block fragmentContent
 	
 	div#toolbox
 		div#toolset1
-			
-		div#toolset2
-			button#reloadButton Reload
+			span
+				button#refreshStaticModelButton Refresh
+				select#staticModelsList("disabled")
+				button#reloadModelButton("disabled") Reload
 				script.
-					$("button#reloadButton").click(function(eventObject){
-						$.get("/apps/staticBrowser1/staticModel.json", function(data){s.graph.clear(); s.graph.read(data);s.refresh();},"json");
+					$("button#reloadModelButton").click(function(eventObject){
+						$.get("/apps/staticBrowser1/staticModel/"+$("select#staticModelsList").val(), function(data){s.graph.clear(); s.graph.read(data);s.refresh();},"json");
 					});
-			
+					
+					$("button#refreshStaticModelButton").click(function(eventObject){
+						$.get("/apps/staticBrowser1/listModels", function(data) { 
+							$("select#staticModelsList").empty();
+							for (var i in data) {
+								$("select#staticModelsList").append("<option>"+data[i]+"</option>");
+							}
+							if ( $("select#staticModelsList option").length > 0 ) {
+								$("select#staticModelsList").removeAttr('disabled'); 
+								$("button#reloadModelButton").removeAttr('disabled'); 
+							}else{
+								$("select#staticModelsList").attr('disabled'); 
+								$("button#reloadModelButton").attr('disabled'); 
+							}
+						});
+					});
+					
+		div#toolset2
+			button#ToggleForceAtlas(value="Off") forceAtlas-Off
+				script.
+					$("button#ToggleForceAtlas").click(function(eventObject){
+						if ( $("button#ToggleForceAtlas").val() == 'On' ){
+							s.stopForceAtlas2(); $("button#ToggleForceAtlas").val("Off"); $("button#ToggleForceAtlas").text("forceAtlas-Off"); }
+						else{
+							s.startForceAtlas2({worker: true, barnesHutOptimize: false});  $("button#ToggleForceAtlas").val("On"); $("button#ToggleForceAtlas").text("forceAtlas-On");
+						}
+					});
+					
+					
 		
 			

@@ -6,6 +6,7 @@
 	"contributors" : [],
 	"preferGlobal" : false,
 	"private" : true,
+	"env": "Development",
 	"scripts" : {
 		"start" : "node ./bin/www"
 	},
@@ -27,6 +28,7 @@
 		"express-session" : "*",
 		"mongoose" : "*",
 		"bcrypt-nodejs":"*",
-		"passport-google-oauth":"*"
+		"passport-google-oauth":"*",
+		"bunyan":"~1.3.4"
 	}
 }

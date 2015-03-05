@@ -8,5 +8,10 @@
 	{
 		"name" : "Static Relationship Browser (Stocks)",
 		"href" : "/apps/staticBrowser1"
+	},
+	{
+		"name" : "Graph Browser (Dynamic)",
+		"href" : "/apps/graphBrowser"
 	}
+	
 ]

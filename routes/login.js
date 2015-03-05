@@ -7,6 +7,19 @@ var User = require('../models/user.js');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var callBackHost = require('../callbackConfig.json').host;
 var util = require('../libs/utils'); 
+var bunyan = require('bunyan');
+var log = bunyan.createLogger({
+		name : 'zeusview.login',
+		streams : [{
+				path : './logs/login.log',
+				level : 'info'
+			}, {
+				stream : process.stderr,
+				level : "debug"
+			}
+		]
+	});
+
 
 var isValidPassword = function (user, password) {
 	return bCrypt.compareSync(password, user.password);
@@ -47,7 +60,7 @@ passport.use('login', new LocalStrategy({
 		passReqToCallback : true
 	},
 		function (req, username, password, done) {
-		console.log("Executing Login Strategy");
+		log.trace("Executing Local Strategy");
 		// check in mongo if a user with username exists or not
 		User.findOne({
 			'username' : username
@@ -58,12 +71,12 @@ passport.use('login', new LocalStrategy({
 				return done(err);
 			// Username does not exist, log the error and redirect back
 			if (!user) {
-				console.log('User Not Found with username ' + username);
+				log.info('User Not Found with username ' + username);
 				return done(null, false, req.flash('message', 'User Not found.'));
 			}
 			// User exists but wrong password, log the error
 			if (!isValidPassword(user, password)) {
-				console.log('Invalid Password');
+				log.error('Invalid Password for '+username);
 				return done(null, false, req.flash('message', 'Invalid Password')); // redirect back to login page
 			}
 			// User and password both match, return user from done method
@@ -89,7 +102,7 @@ passport.use(new GoogleStrategy({
 			// to associate the Google account with a user record in your database,
 			// and return that user instead.
 			//ToDo to refine the flow
-			console.log("GoogleProfile Returned:"+profile.id+"::"+profile.provider+"::"+profile.displayName);
+			log.info("GoogleProfile Returned:"+profile.id+"::"+profile.provider+"::"+profile.displayName);
 			
 			
 			User.findOne({
@@ -99,11 +112,12 @@ passport.use(new GoogleStrategy({
 				function (err, user) {
 				// In case of any error, return using the done method
 				if (err) {
+					log.error("User Find Error: "+err);
 					return done(err);
 				}
 				// Username does not exist, log the error and redirect back
 				if (!user) {
-					console.log('User Not Found. Insert Into Our User Profile');
+					log.info('User Not Found. Register User Profile:'+profile.displayName+"::"+profile.id+" from google");
 					var newUser = new User();
 
 					// set the user's local credentials
@@ -126,15 +140,15 @@ passport.use(new GoogleStrategy({
 					// save the user
 					newUser.save(function (err) {
 						if (err) {
-							console.log('Error in Saving user: ' + err);
-							throw err;
+							log.error('Error in Saving user: ' + err);
+						}else{
+							log.info('User Registration succesful:'+profile.displayName+"::"+profile.id+" from google");
 						}
-						console.log('User Registration succesful');
 					});
 					
 					return done(null,{"id":newUser.z_id,"displayName":newUser.displayName, "picture":profile._json.picture });
 				}
-				console.log("Found"+user.displayName);
+				log.info('Returning User'+ user.displayName+"::"+user.z_id);
 				var picture ="";
 				for ( var i in user.provider){
 					if ( (""+user.provider[i].name).toLowerCase() == 'google') {
