@@ -13,7 +13,6 @@ var flash = require('connect-flash');
 
 var dbConfig = require('./db');
 var mongoose = require('mongoose');
-
 // Connect to DB
 mongoose.connect(dbConfig.url, dbConfig.options);
 
@@ -33,10 +32,10 @@ app.use(passport.session());
 app.use(flash());
 
 var routes = require('./routes/index');
-var login  = require('./login');
+var login  = require('./routes/login');
 var userApps = require('./apps/index');
 
-app.set('env','prod');
+//app.set('env','prod');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

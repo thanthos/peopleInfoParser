@@ -3,10 +3,10 @@ var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var bCrypt = require('bcrypt-nodejs');
-var User = require('./models/user.js');
+var User = require('../models/user.js');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-var callBackHost = require('./callbackConfig.json').host;
-var util = require('./libs/utils');
+var callBackHost = require('../callbackConfig.json').host;
+var util = require('../libs/utils'); 
 
 var isValidPassword = function (user, password) {
 	return bCrypt.compareSync(password, user.password);
@@ -28,7 +28,6 @@ var isValidPassword = function (user, password) {
 //   have a database of user records, the complete Google profile is
 //   serialized and deserialized.
 passport.serializeUser(function (user, done) {
-	console.log('serializing user: ');
 	//console.log(user);
 	done(null, user);
 });
@@ -133,10 +132,16 @@ passport.use(new GoogleStrategy({
 						console.log('User Registration succesful');
 					});
 					
-					return done(null,{"id":newUser.z_id,"displayName":newUser.displayName});
+					return done(null,{"id":newUser.z_id,"displayName":newUser.displayName, "picture":profile._json.picture });
 				}
 				console.log("Found"+user.displayName);
-				return done(null, {"id":user.z_id,"displayName":user.displayName});
+				var picture ="";
+				for ( var i in user.provider){
+					if ( (""+user.provider[i].name).toLowerCase() == 'google') {
+						picture = user.provider[i].picture;
+					}	
+				}
+				return done(null, {"id":user.z_id,"displayName":user.displayName,"picture":picture});
 
 			});
 

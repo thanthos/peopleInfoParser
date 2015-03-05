@@ -12,6 +12,13 @@ span.rightHalf {
     -ms-flex: 1; /* IE 10 */ 
     flex: 1;
 }
+img#profile{
+	height:30px;
+	width:30px;
+	vertical-align:middle;
+	border-radius : 6px;
+	
+}
 
 span.username_Display {
 	font-size:12px;
@@ -74,3 +81,4 @@ div#toolset3{
     flex: 1;
 	
 }
+
