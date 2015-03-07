@@ -3,13 +3,15 @@ var mongoose = require('mongoose');
 module.exports = mongoose.model('staff', {
 		name : String,
 		age : Number,
-		symbol : String,
-		since : Number,
-		position : String,
-		description : String,
-		lastFiscalCompensation : Number,
-		optionsHolding : Number,
-		optionsValue : Number,
+		symbols:[{
+			symbol : String,
+			since : Number,
+			position : String,
+			description : String,
+			lastFiscalCompensation : Number,
+			optionsHolding : Number,
+			optionsValue : Number
+			}],
 		searchInitiateBy : String,
 		foundOn : Date,
 		updatedOn : Date

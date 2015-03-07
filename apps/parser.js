@@ -77,13 +77,14 @@ router.post('/', function (req, res, next) {
 							var s = new Staff();
 							s.name = instance["Name"];
 							s.age = instance["Age"];
-							s.symbol = realSymbol;
-							s.since = instance["Age"];
-							s.position = instance["Current Position"];
-							s.Description = instance["Description"];
-							s.lastFiscalCompensation = ((instance["Fiscal Year Total"]) == "--" ? 0 : instance["Fiscal Year Total"]);
-							s.optionsHolding = instance["Options"];
-							s.optionsValue = instance["Value"];
+							s.symbols = [ {"symbol":realSymbol,
+											 "since" :instance["Age"],
+											 "position":instance["Current Position"],
+											 "Description":instance["Description"],
+											 "lastFiscalCompensation":((instance["Fiscal Year Total"]) == "--" ? 0 : instance["Fiscal Year Total"]),
+											 "optionsHolding":instance["Options"],
+											 "optionsValue":instance["Value"]
+											 }],
 							s.searchInitiateBy = req.user.id;
 							s.foundOn = s.updatedOn = new Date();
 

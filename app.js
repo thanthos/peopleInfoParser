@@ -8,13 +8,13 @@ var fs = require('fs');
 var passport = require('passport');
 var expressSession = require('express-session');
 var flash = require('connect-flash');
-var package = require('./package.json');
+var package_json = require('./package.json');
 var bunyan = require('bunyan');
 var log = bunyan.createLogger({
 		name : 'zeusview.app',
 		streams : [{
 				path : './logs/app.log',
-				level : 'info'
+				level : 'debug'
 			}, {
 				stream : process.stderr,
 				level : "debug"
@@ -49,7 +49,7 @@ var routes = require('./routes/index');
 var login = require('./routes/login');
 var userApps = require('./apps/index');
 
-app.set('env', package.env);
+app.set('env', package_json.env);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -66,7 +66,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //setup access.logs
 var accessLogStream = fs.createWriteStream(__dirname + '/logs/access.log', {
-		flag : 'a+'
+		flag : 'a'
 	});
 app.use(logger('combined', {
 		stream : accessLogStream

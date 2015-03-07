@@ -54,10 +54,16 @@ block fragmentContent
 							}
 						});
 					});
-					
-		div#toolset2
-			button#ToggleForceAtlas(value="Off") forceAtlas-Off
-				script.
+		div#toolset2  
+			span
+				button#ToggleForceAtlas(value="Off") forceAtlas-Off
+				| 
+				button#ToggleShowNodes(value="On") Hide Nodes
+				| 
+				button#ToggleShowEdge(value="On") Hide Edges
+				| 
+				button#ToggleShowLabels(value="On") Hide Labels
+			script.
 					$("button#ToggleForceAtlas").click(function(eventObject){
 						if ( $("button#ToggleForceAtlas").val() == 'On' ){
 							s.stopForceAtlas2(); $("button#ToggleForceAtlas").val("Off"); $("button#ToggleForceAtlas").text("forceAtlas-Off"); }
@@ -65,7 +71,32 @@ block fragmentContent
 							s.startForceAtlas2({worker: true, barnesHutOptimize: false});  $("button#ToggleForceAtlas").val("On"); $("button#ToggleForceAtlas").text("forceAtlas-On");
 						}
 					});
+					$("button#ToggleShowNodes").click(function(eventObject){
+						if ( $("button#ToggleShowNodes").val() == 'On' ){
+							s.settings({"drawNodes":false}); s.refresh(); $("button#ToggleShowNodes").val("Off"); $("button#ToggleShowNodes").text("Draw Nodes");
+						}
+						else{
+							s.settings({"drawNodes":true}); s.refresh(); $("button#ToggleShowNodes").val("On"); $("button#ToggleShowNodes").text("Hide Nodes");
+						}
+					});
 					
+					$("button#ToggleShowEdge").click(function(eventObject){
+						if ( $("button#ToggleShowEdge").val() == 'On' ){
+							s.settings({"drawEdges":false}); s.refresh(); $("button#ToggleShowEdge").val("Off"); $("button#ToggleShowEdge").text("Draw Edges");
+						}
+						else{
+							s.settings({"drawEdges":true}); s.refresh(); $("button#ToggleShowEdge").val("On"); $("button#ToggleShowEdge").text("Hide Edges");
+						}
+					});
+					
+					$("button#ToggleShowLabels").click(function(eventObject){
+						if ( $("button#ToggleShowLabels").val() == 'On' ){
+							s.settings({"drawLabels":false}); s.refresh(); $("button#ToggleShowLabels").val("Off"); $("button#ToggleShowLabels").text("Draw Labels");
+						}
+						else{
+							s.settings({"drawLabels":true}); s.refresh(); $("button#ToggleShowLabels").val("On"); $("button#ToggleShowLabels").text("Hide Labels");
+						}
+					});
 					
 		
 			

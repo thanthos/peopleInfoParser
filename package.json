@@ -26,7 +26,7 @@
 		"passport" : "0.2.1",
 		"passport-local" : "*",
 		"express-session" : "*",
-		"mongoose" : "*",
+		"mongoose" : "3.8.24",
 		"bcrypt-nodejs":"*",
 		"passport-google-oauth":"*",
 		"bunyan":"~1.3.4"
