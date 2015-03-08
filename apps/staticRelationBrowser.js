@@ -111,14 +111,17 @@ function StaticStockModelGenerator(req, res, next) {
 			log.debug("Number of Graph Nodes Start:" + self.graphs.nodes.length);
 			for (var i in nodes) {
 				var doc = nodes[i];
+				var color = ["blue","green","black","darkgreen","indianred"];
+				if ( doc.symbol == 'SGXL.SI' ) color = "Yellow";
 				self.graphs.nodes.push({
 					"name" : doc.name,
 					"id" : doc.symbol,
-					"size" : 1,
+					"size" : 0.8,
 					"label" : doc.name,
 					"x" : 100 * Math.cos(2 * i * Math.PI / nodes.length) + 5,
 					"y" : 100 * Math.sin(2 * i * Math.PI / nodes.length),
-					"nodeType" : "stock"
+					"nodeType" : "stock",
+					"color": color[(Math.random() * 5) | 0]
 				});
 			}
 			log.debug("Number of Graph Nodes End:" + self.graphs.nodes.length);

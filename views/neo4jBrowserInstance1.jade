@@ -34,6 +34,7 @@ block fragmentContent
 				button#refreshStaticModelButton Refresh
 				select#staticModelsList("disabled")
 				button#reloadModelButton("disabled") Reload
+				button#updateJSONModel Generate Update
 				script.
 					$("button#reloadModelButton").click(function(eventObject){
 						$.get("/apps/staticBrowser1/staticModel/"+$("select#staticModelsList").val(), function(data){s.graph.clear(); s.graph.read(data);s.refresh();},"json");
@@ -53,6 +54,10 @@ block fragmentContent
 								$("button#reloadModelButton").attr('disabled'); 
 							}
 						});
+					});
+					
+					$("button#updateJSONModel").click(function(eventObject){
+						$.get("/apps/staticBrowser1/genStaticModel");
 					});
 		div#toolset2  
 			span
