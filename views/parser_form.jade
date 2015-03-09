@@ -10,4 +10,13 @@ block formContent
 			input(name="submit" type="submit" value="Search and Save")
 	p.
 		Display the top appointment holders of the listed company. 
-	
+	script. 
+		function validateForm(form){
+			$.post(form.action, {"submit":form.submit.value,"sym":form.sym.value}, function (data) {
+				console.log(data.length);
+				console.log(JSON.stringify(data[0]));
+				$("#page-content").empty();
+				$("#page-content").html("<pre>"+JSON.stringify(data,undefined, 4)+"</pre>");
+			});
+			return false;
+		}
