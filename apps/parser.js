@@ -78,7 +78,7 @@ router.post('/', function (req, res, next) {
 							s.name = instance["Name"];
 							s.age = instance["Age"];
 							s.symbols = [ {"symbol":realSymbol,
-											 "since" :instance["Age"],
+											 "since" :instance["Since"],
 											 "position":instance["Current Position"],
 											 "Description":instance["Description"],
 											 "lastFiscalCompensation":((instance["Fiscal Year Total"]) == "--" ? 0 : instance["Fiscal Year Total"]),

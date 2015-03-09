@@ -17,8 +17,10 @@ block fragmentContent
 				edgeHoverSizeRatio: 1.5,
 				defaultLabelSize:10,
 				edgeColor:"Source",
-				labelSize:"proportional"
-				
+				edgeLabelThreshold: 3,
+				defaultEdgeLabelSize: 3,
+				labelSize:"proportional",
+				edgeLabelSize: "proportional"
 			}
 		});
 		var dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
