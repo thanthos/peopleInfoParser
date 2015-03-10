@@ -12,9 +12,6 @@ block formContent
 		List the listed company that may be related to your search.
 		
 	script. 
-		function output(inp) {
-			document.body.appendChild(document.createElement('pre')).innerHTML = inp;
-		}
 		function validateForm(form){
 			$.post(form.action, {"submit":form.submit.value,"searchStockSymbol":form.searchStockSymbol.value}, function (data) {
 				console.log(data.length);

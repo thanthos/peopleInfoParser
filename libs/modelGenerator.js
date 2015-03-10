@@ -52,43 +52,48 @@ var ModelGenerator = function () {
 				"name" : self.duplicates[i]._id.name,
 				"age" : self.duplicates[i]._id.age
 			}, function (err, results) {
-
-				if (err) {
+				if (err) { //Process the found results
 					log.warn("Error looking up %s %s", self.duplicates[i]._id.name, self.duplicates[i]._id.age);
 				} else {
 					//Merge the duplicate
 					log.debug("Found Results %s", JSON.stringify(results));
 					var masterRec = results[0];
 					for (var x = 1; x < results.length; x++) {
-						if (masterRec.symbols.length < results[x].symbols.length) { //execute swap
-							results[x] = [masterRec, masterRec = results[x]][0];
-							log.debug("Master Record Swapping Position");
+						try {
+							if (masterRec.symbols.length < results[x].symbols.length) { //execute swap
+								results[x] = [masterRec, masterRec = results[x]][0];
+								log.debug("Master Record Swapping Position");
+							}
+							masterRec.symbols.push(results[x].symbols[0]);
+							Staff.remove({
+								"name" : results[x].name,
+								"age" : results[x].age,
+								"symbols.symbol" : results[x].symbols[0].symbol
+							}, function (e) {
+								if (e) {
+									log.debug("Error Removing Record :%s", e);
+								} else {
+									log.debug("Record Removed");
+								}
+							});
+							Staff.update({
+								"_id" : masterRec._id
+							}, {
+								symbols : masterRec.symbols,
+								updatedOn : new Date()
+							}, function (updateErr, num, raw) {
+								if (updateErr) {
+									log.warn("Error Updating Duplicate Staff");
+								} else {
+									log.info("Duplicate Staff. Successfully Merge Symbols.");
+								}
+							});
+						} catch (e) {
+							log.error("Issue merging %s", masterRec);
 						}
-						masterRec.symbols.push(results[x].symbols[0]);
-						Staff.remove({
-							"name" : results[x].name,
-							"age" : results[x].age,
-							"symbols.symbol" : results[x].symbols[0].symbol
-						}, function (e) {
-							if (e) {
-								log.debug("Error Removing Record :%s", e);
-							} else {
-								log.debug("Record Removed");
-							}
-						});
-						Staff.update({
-							"_id" : masterRec._id
-						}, {
-							symbols : masterRec.symbols,
-							updatedOn: new Date()
-						}, function (updateErr, num, raw) {
-							if (updateErr) {
-								log.warn("Error Updating Duplicate Staff");
-							} else {
-								log.info("Duplicate Staff. Successfully Merge Symbols.");
-							}
-						});
+
 					}
+
 				}
 			});
 		};
@@ -164,18 +169,18 @@ var ModelGenerator = function () {
 						"size" : 0.15,
 						"label" : doc.name,
 						"symbol" : symbols,
-						"x" : 110 * Math.cos(2 * i * Math.PI / docs.length),
-						"y" : 120 * Math.sin(2 * i * Math.PI / docs.length),
+						"x" : 120 * Math.cos(2 * i * Math.PI / docs.length),
+						"y" : 100 * Math.sin(2 * i * Math.PI / docs.length),
 						"color" : "purple",
 						"nodeType" : "staff"
 					});
 				}
+				log.info("Loaded %s Staff node", docs.length);
+				ee.emit("populatedStaff");
 			} catch (findError) {
 				log.error("Error Prcessing Staff. %s", findError);
 				ee.emit("generationCompleted");
 			}
-			log.info("Loaded %s Staff node", docs.length);
-			ee.emit("populatedStaff");
 		}
 	}
 	this.processStaffs = function () {
@@ -187,7 +192,7 @@ var ModelGenerator = function () {
 		try {
 			for (var i in self.graph.nodes) {
 				var node = self.graph.nodes[i];
-				log.debug("Node: " + node.id);
+				log.debug("Node: %s :: %s", node.id, node.name);
 				if (node.nodeType == 'staff') {
 					for (var x = 0; x < node.symbol.length; x++) {
 						var edge = {
@@ -244,6 +249,19 @@ var ModelGenerator = function () {
 			if (ee.listeners("duplicateFound").length > 0) {
 				ee.removeAllListeners("duplicateFound")
 			}
+				if (ee.listeners("duplicateProcessed").length > 0) {
+				ee.removeAllListeners("duplicateProcessed")
+			}
+				if (ee.listeners("populatedNodes").length > 0) {
+				ee.removeAllListeners("populatedNodes")
+			}
+				if (ee.listeners("populatedStaff").length > 0) {
+				ee.removeAllListeners("populatedStaff")
+			}
+				if (ee.listeners("modelCompleted").length > 0) {
+				ee.removeAllListeners("modelCompleted")
+			}
+			
 			log.debug("Listeners Length : %s %s %s %s %s %s", ee.listeners("duplicateFound").length,
 				ee.listeners("duplicateProcessed").length,
 				ee.listeners("populatedNodes").length,

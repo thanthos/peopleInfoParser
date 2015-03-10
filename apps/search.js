@@ -4,6 +4,20 @@ var request = require("request");
 var cheerio = require('cheerio');
 var JSON = require('JSON');
 var Stock = require('../models/stock.js');
+var bunyan = require('bunyan');
+var log = bunyan.createLogger({
+		name : 'stock_search',
+		streams : [{
+				path : './logs/app.log',
+				level : 'debug'
+			}, {
+				stream : process.stderr,
+				level : "debug"
+			}
+		]
+	});
+
+
 
 router.get('/', function (req, res, next) {
 	var formDetails = {
@@ -20,7 +34,7 @@ router.post('/', function (req, res, next) {
 	var searchContext = encodeURIComponent(req.body.searchStockSymbol);
 	var saveRequired = encodeURIComponent(req.body.submit);
 
-	console.log("search.js?query=" + searchContext);
+	log.info("search.js?query=" + searchContext);
 
 	//http://www.reuters.com/finance/stocks/lookup?searchType=any&search=cordlife%20limited
 	request({
@@ -29,7 +43,7 @@ router.post('/', function (req, res, next) {
 		// Hand the HTML response off to Cheerio and assign that to
 		//  a local $ variable to provide familiar jQuery syntax.
 		if (err && response.statusCode !== 200) {
-			console.log('Unable to get Data from Source.');
+			log.error('Unable to get Data from Source.');
 			next(err);
 		} else {
 			var $ = cheerio.load(body);
@@ -59,7 +73,7 @@ router.post('/', function (req, res, next) {
 							s.searchInitiateBy = req.user.id;
 						} catch (e) {
 							//Chances are the session has expire.
-							console.log("Cannot Get UserID from the session. Session Expired or User not login.");
+							log.warn("Cannot Get UserID from the session. Session Expired or User not login.");
 							res.writeHead(302, {
 								'location' : '/login'
 							});
@@ -70,9 +84,9 @@ router.post('/', function (req, res, next) {
 						s.save(function (err, stock, numberAffected) {
 							if (err) {
 								if (!(("" + err).indexOf("E11000") > -1))
-									console.log('Error in Saving stock: ' + err); //TODO: Update Error Handling
+									log.error('Error in Saving stock: ' + err); //TODO: Update Error Handling
 							} else {
-								console.log(stock.symbol + " saved(" + numberAffected + ")");
+								log.info(stock.symbol + " saved(" + numberAffected + ")");
 							}
 						});
 					}
