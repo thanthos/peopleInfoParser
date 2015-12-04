@@ -1,0 +1,84 @@
+
+span.leftHalf {
+	text-align:left;
+	-webkit-flex: 1; /* Safari 6.1+ */
+    -ms-flex: 1; /* IE 10 */ 
+    flex: 1;
+}
+
+span.rightHalf {
+	text-align:right;
+	-webkit-flex: 1; /* Safari 6.1+ */
+    -ms-flex: 1; /* IE 10 */ 
+    flex: 1;
+}
+img#profile{
+	height:30px;
+	width:30px;
+	vertical-align:middle;
+	border-radius : 6px;
+	
+}
+
+span.username_Display {
+	font-size:12px;
+}
+
+div.list_Header{
+	font-weight:bold;
+	font-size:18px;
+	padding: 5px;
+}
+
+div.footer{
+	font-size:10px;
+	display: -webkit-flex;
+	display: flex;
+	width=100%;
+}
+
+div.footerContent{
+	-webkit-flex: 1; /* Safari 6.1+ */
+    -ms-flex: 1; /* IE 10 */ 
+    flex: 1;
+	text-align:center;
+}
+div.headingText{
+	font:24px bold;
+}
+
+div#sigmaCanvas{
+	border-radius : 3px;
+	padding : 0px;
+	border : 2px solid #36518E;
+	height: 80%;
+}
+
+div#toolbox{
+	border-radius : 10px;
+	padding : 10px 10px;
+	height: 20%;
+	background-color:gray;
+	display:flex;
+}
+
+div#toolset1{
+	-webkit-flex: 1; /* Safari 6.1+ */
+    -ms-flex: 1; /* IE 10 */ 
+    flex: 1;
+	
+}
+
+div#toolset2{
+	-webkit-flex: 1; /* Safari 6.1+ */
+    -ms-flex: 1; /* IE 10 */ 
+    flex: 1;
+	
+}
+div#toolset3{
+	-webkit-flex: 1; /* Safari 6.1+ */
+    -ms-flex: 1; /* IE 10 */ 
+    flex: 1;
+	
+}
+

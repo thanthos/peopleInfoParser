@@ -1,0 +1,36 @@
+extends defaultLayout
+
+block meta
+	meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1")
+
+append styles
+	link(rel='stylesheet', href='/stylesheets/drawer.css')
+	
+append scripts
+	include ./includes/sigma.jade
+	include ./includes/sigma_extentions.jade
+	
+block bodyContent
+	input(type="checkbox" id="drawer-toggle" name="drawer-toggle")
+	label(for="drawer-toggle" id="drawer-toggle-label")
+	header
+		span(class="leftHalf")
+			|Zeus View
+		span(class="rightHalf username_Display") 
+			a(href="/profileManagement"): img(id="profile" src=user.picture)
+			||
+			a(href="/signout") LogOut
+	nav( id="drawer")
+		div(class="list_Header")
+			|Application List
+		ul
+			each app in apps
+				li
+					a(href="#" class="appLink" name=app.href)=app.name
+		script.
+			$('a.appLink').click(function(eventObject){
+				$('#page-content').replaceWith($('#page-content').load(this.name));
+			});
+	div(id="page-content")
+		block pageContent
+			include ./includes/appIntroText.jade

@@ -1,0 +1,162 @@
+/* Makes sure that everything is 100% height */
+* {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	box-sizing: border-box;
+	-webkit-transition: .25s ease-in-out;
+	-moz-transition: .25s ease-in-out;
+	-o-transition: .25s ease-in-out;
+	transition: .25s ease-in-out;
+	margin: 0;
+	padding: 0;
+	-webkit-text-size-adjust: none;
+}
+
+html,body {
+	height: 100%;
+	overflow: hidden;
+}
+
+/* gets the actual input out of the way; we're going to style the label instead */
+
+#drawer-toggle {
+	position: absolute;
+	opacity: 0;
+}
+
+#drawer-toggle-label {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	left: 0px;
+	height:40px;
+	width: 35px;
+	display: block;
+	position: fixed;
+	background: #800003;
+	z-index: 1;
+}
+
+/* adds our "hamburger" menu icon */
+
+#drawer-toggle-label:before {
+	content: '';
+	display: block;
+	position: absolute;
+	height: 2px;
+	width: 24px;
+	background: #EB2126;
+	left: 5px;
+	top: 13px;
+	box-shadow: 0 6px 0 #EB2126, 0 12px 0 #EB2126;
+}
+
+header {
+	width: 100%;
+	position: fixed;
+	left: 0px;
+	background: #efefef;
+	padding: 5px 10px 5px 50px;
+	font-size: 20px;
+	line-height: 30px;
+	z-index: 0;
+	display: -webkit-flex;
+	display: flex;
+}
+
+/* drawer menu pane - note the 0px width */
+
+#drawer {
+	position: fixed;
+	top: 0;
+	left:-200px;
+	height: 100%;
+	width: 200px;
+	background: #DC8B96;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	padding: 10px 20px 5px 20px;
+	line-height: 10px;
+	-webkit-overflow-scrolling: touch;
+}
+
+/* actual page content pane */
+
+#page-content {
+	margin-left: 0px;
+	margin-top: 40px;
+	width: 100%;
+	height: calc(100% - 50px);
+	overflow-x:hidden;
+	overflow-y:scroll;
+	-webkit-overflow-scrolling: touch;
+	padding: 20px;
+}
+
+/* checked styles (menu open state) */
+
+#drawer-toggle:checked ~ #drawer-toggle-label {
+	height: 100%;
+	width: calc(100% - 200px);
+	background: rgba(255,255,255,.8);
+}
+
+#drawer-toggle:checked ~ #drawer {
+    left:0;
+}
+
+#drawer-toggle:checked ~ #drawer-toggle-label, #drawer-toggle:checked ~ header {
+	left: 200px;
+}
+
+#drawer-toggle:checked ~ #page-content {
+	margin-left: 200px;
+}
+
+/* Menu item styles */
+#drawer ul {
+    list-style-type:none;
+	line-height:10%;
+	font-stretch: normal;
+	
+}
+#drawer ul a {
+    display:block;
+    padding:3px;
+    color:#c7c7c7;
+    text-decoration:none;
+	line-height:1em;
+	
+}
+
+#drawer ul a:hover {
+    color:white;
+}
+
+/* Responsive MQ */
+
+@media all and (max-width:350px) {
+
+	#drawer-toggle:checked ~ #drawer-toggle-label {
+		height: 100%;
+		width: 50px;
+	}
+	
+	#drawer-toggle:checked ~ #drawer-toggle-label, #drawer-toggle:checked ~ header {
+		left: calc(100% - 50px);
+	}
+	
+	#drawer {
+	    width:calc(100% - 50px);
+	    left: -100%;
+	}
+	
+	#drawer-toggle:checked ~ #page-content {
+		margin-left: calc(100% - 50px);
+	}
+
+}

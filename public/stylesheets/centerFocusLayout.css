@@ -1,0 +1,46 @@
+/* This style is used by the login page for its layout. */
+
+#wrapper { 
+ margin: 0 auto;
+ width: 900px;
+ 
+}
+#content { 
+-webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+-o-box-sizing: border-box;
+box-sizing: border-box;
+ width: 100%;
+ color: #333;
+ border: 1px solid #ccc;
+ margin: 10px 10x 10px 10x;
+ padding: 60px 10px;
+ height: 468px;
+ background-image: url("/images/mtOlympus.jpg");
+ background-size: contain;
+ background-repeat: no-repeat;
+ //-khtml-opacity:.50; 
+ //-moz-opacity:.50; 
+ //-ms-filter:"alpha(opacity=50)";
+ // filter:alpha(opacity=50);
+//  filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0.5);
+ // opacity:.50; 
+}
+
+.center {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 5px 5px 5px 5px;
+	margin-left: auto;
+    margin-right: auto; 
+	width:38%;
+	text-align:center;
+	background-color:white;
+	
+}
+
+table.translucent {
+	
+}

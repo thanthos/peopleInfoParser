@@ -1,0 +1,107 @@
+extends fragments_neo4jBrowser
+
+block fragmentContent
+	div#sigmaCanvas
+		
+	script.
+		//Set Sigma Default Renderer to Canvas
+		sigma.renderers.def = sigma.renderers.canvas
+		// Instantiate sigma:
+		var s = new sigma({
+			renderer: { container: document.getElementById('sigmaCanvas'),type: 'canvas'},
+			settings: {
+				doubleClickEnabled: false,
+				minEdgeSize: 0.5,
+				minArrowSize: 1.5,
+				enableEdgeHovering: true,
+				edgeHoverSizeRatio: 1.5,
+				defaultLabelSize:10,
+				edgeColor:"Source",
+				labelSize:"proportional"
+				
+			}
+		});
+		var dragListener = sigma.plugins.dragNodes(s, s.renderers[0]);
+
+	script.
+		var g = {id:0,"name":"ME", "label":"ME", x:0, y:0 , size:3};
+		s.graph.addNode(g);
+		s.refresh();
+	
+	div#toolbox
+		div#toolset1
+			span
+				button#refreshStaticModelButton Refresh
+				select#staticModelsList("disabled")
+				button#reloadModelButton("disabled") Reload
+				button#updateJSONModel Generate Update
+				script.
+					$("button#reloadModelButton").click(function(eventObject){
+						$.get("/apps/staticBrowser1/staticModel/"+$("select#staticModelsList").val(), function(data){s.graph.clear(); s.graph.read(data);s.refresh();},"json");
+					});
+					
+					$("button#refreshStaticModelButton").click(function(eventObject){
+						$.get("/apps/staticBrowser1/listModels", function(data) { 
+							$("select#staticModelsList").empty();
+							for (var i in data) {
+								$("select#staticModelsList").append("<option>"+data[i]+"</option>");
+							}
+							if ( $("select#staticModelsList option").length > 0 ) {
+								$("select#staticModelsList").removeAttr('disabled'); 
+								$("button#reloadModelButton").removeAttr('disabled'); 
+							}else{
+								$("select#staticModelsList").attr('disabled'); 
+								$("button#reloadModelButton").attr('disabled'); 
+							}
+						});
+					});
+					
+					$("button#updateJSONModel").click(function(eventObject){
+						$.get("/apps/staticBrowser1/genStaticModel");
+					});
+		div#toolset2  
+			span
+				button#ToggleForceAtlas(value="Off") forceAtlas-Off
+				| 
+				button#ToggleShowNodes(value="On") Hide Nodes
+				| 
+				button#ToggleShowEdge(value="On") Hide Edges
+				| 
+				button#ToggleShowLabels(value="On") Hide Labels
+			script.
+					$("button#ToggleForceAtlas").click(function(eventObject){
+						if ( $("button#ToggleForceAtlas").val() == 'On' ){
+							s.stopForceAtlas2(); $("button#ToggleForceAtlas").val("Off"); $("button#ToggleForceAtlas").text("forceAtlas-Off"); }
+						else{
+							s.startForceAtlas2({worker: true, barnesHutOptimize: false});  $("button#ToggleForceAtlas").val("On"); $("button#ToggleForceAtlas").text("forceAtlas-On");
+						}
+					});
+					$("button#ToggleShowNodes").click(function(eventObject){
+						if ( $("button#ToggleShowNodes").val() == 'On' ){
+							s.settings({"drawNodes":false}); s.refresh(); $("button#ToggleShowNodes").val("Off"); $("button#ToggleShowNodes").text("Draw Nodes");
+						}
+						else{
+							s.settings({"drawNodes":true}); s.refresh(); $("button#ToggleShowNodes").val("On"); $("button#ToggleShowNodes").text("Hide Nodes");
+						}
+					});
+					
+					$("button#ToggleShowEdge").click(function(eventObject){
+						if ( $("button#ToggleShowEdge").val() == 'On' ){
+							s.settings({"drawEdges":false}); s.refresh(); $("button#ToggleShowEdge").val("Off"); $("button#ToggleShowEdge").text("Draw Edges");
+						}
+						else{
+							s.settings({"drawEdges":true}); s.refresh(); $("button#ToggleShowEdge").val("On"); $("button#ToggleShowEdge").text("Hide Edges");
+						}
+					});
+					
+					$("button#ToggleShowLabels").click(function(eventObject){
+						if ( $("button#ToggleShowLabels").val() == 'On' ){
+							s.settings({"drawLabels":false}); s.refresh(); $("button#ToggleShowLabels").val("Off"); $("button#ToggleShowLabels").text("Draw Labels");
+						}
+						else{
+							s.settings({"drawLabels":true}); s.refresh(); $("button#ToggleShowLabels").val("On"); $("button#ToggleShowLabels").text("Hide Labels");
+						}
+					});
+					
+		
+			
